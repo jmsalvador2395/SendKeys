@@ -22,46 +22,24 @@ mygui := Gui()
 mygui.AddText(,"Chose your target window from the list:")
 mygui.AddDropDownList("vWin w400 AltSubmit", win_opts)
 
-mygui.AddText(,"Subjective:")
-mygui.Add("Edit", "r9 vSubjective w400")
-
-mygui.AddText(,"Objective:")
-mygui.Add("Edit", "r9 vObjective w400")
-
-mygui.AddText(,"Assessment:")
-mygui.Add("Edit", "r9 vAssessment w400")
-
-mygui.AddText(,"Plan:")
-mygui.Add("Edit", "r9 vPlan w400")
+mygui.AddText(,"Text:")
+mygui.Add("Edit", "r9 vText w400")
 
 submit_btn := mygui.AddButton("Default", "Submit")
-cancel_btn := mygui.AddButton("Default", "Cancel")
 
-; submit_btn.OnEvent("Click", Button_FillInformation)
 submit_btn.OnEvent("Click", (*) => Button_FillInformation(mygui, win_info))
 Button_FillInformation(mygui, win_info) {
     data := mygui.Submit()
     win := win_info[data.Win]
-    ; WinActivate(win.title, win.text)
+
+    ; activate the selected window
     WinActivate("ahk_id " win.id)
     WinWaitActive("ahk_id " win.id)
-    Send("{Tab}")
-    Send(data.Subjective)
-    Send("{Tab}")
-    Send(data.Objective)
-    Send("{Tab}")
-    Send(data.Assessment)
-    Send("{Tab}")
-    Send(data.Plan)
+
+    ; send the text to the active window
+    Send(data.Text)
+
     ExitApp()
 }
-
-cancel_btn.OnEvent("Click", (*) => Button_Cancel())
-Button_Cancel() {
-    ExitApp()
-}
-
 
 mygui.Show()
-
-; ExitApp
