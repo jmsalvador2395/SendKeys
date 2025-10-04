@@ -35,6 +35,8 @@ Button_FillInformation(mygui, win_info) {
     ; activate the selected window
     WinActivate("ahk_id " win.id)
     WinWaitActive("ahk_id " win.id)
+    
+    Sleep 500
 
     ; send the text to the active window
     Send(data.Text)
